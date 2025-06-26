@@ -16,21 +16,11 @@ export default function Movements({ dados }) {
     });
   }
 
-  function calcularRecebimentos(recebimentos) {
-    let soma = 0;
-
-    for (let i = 0; i < recebimentos.length; i++) {
-      if (recebimentos[i].tipo === 1) {
-        soma += recebimentos[i].valor;
-      }
-    }
-  }
-
   return (
     <TouchableOpacity onPress={visualizarValor} style={styles.container}>
       <Text style={styles.data}>{dados.data}</Text>
 
-      <Text style={styles.conteudo}>
+      <View style={styles.conteudo}>
         {dados.titulo}
 
         {mostrarValor ? (
@@ -39,10 +29,10 @@ export default function Movements({ dados }) {
               ? `${transformarEmMoeda(dados.valor)}`
               : `-${transformarEmMoeda(dados.valor)}`}
           </Text>
-        ) : (
+        ) : ( 
           <View style={styles.borrao}></View>
         )}
-      </Text>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -57,7 +47,7 @@ const styles = StyleSheet.create({
 
   conteudo: {
     flexDirection: "row", // em linha
-    justifyContent: "space-between", // espaço entte os itens
+    justifyContent: "space-between",
     marginTop: 2, // espaço no topo
     marginBottom: 8, // espaço na parte de baixo
   },

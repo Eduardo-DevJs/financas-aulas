@@ -84,11 +84,49 @@ const lista = [
   },
 ];
 
+function transformarEmDinheiro(valor) {
+  return valor.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+}
+
+function calcularRecebimentos(recebimentos) {
+  let soma = 0;
+
+  for (let i = 0; i < recebimentos.length; i++) {
+    if (recebimentos[i].tipo === 1) {
+      soma += recebimentos[i].valor;
+    }
+  }
+
+  return soma;
+}
+
+function calcularGastos(gastos) {
+  let soma = 0;
+
+  for (let i = 0; i < gastos.length; i++) {
+    if (gastos[i].tipo === 0) {
+      soma += gastos[i].valor;
+    }
+  }
+
+  return soma;
+}
+
+const saldo = calcularRecebimentos(lista);
+const gasto = calcularGastos(lista);
+const calculo = saldo - gasto;
+
 export default function Home() {
   return (
     <View style={styles.container}>
       <Header />
-      <Balance saldo={"R$ 1200,00"} gastos={"R$ 600,00"} />
+      <Balance
+        saldo={transformarEmDinheiro(calculo)}
+        gastos={transformarEmDinheiro(gasto)}
+      />
       <Actions />
 
       <Text style={styles.titulo}>Últimas movimentações</Text>
@@ -104,4 +142,23 @@ export default function Home() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1, // ocupa todo espaço da tela
+    backgroundColor: "#fafafa", // pintar cor de fundo
+  },
+
+  titulo: {
+    fontSize: 18, // tamanho da letra
+    fontWeight: "bold", // negrito
+    marginLeft: 14, // espaço na esquerda
+    marginRight: 14, // espaço na direita
+    marginTop: 14, // espaço em cima
+    marginBottom: 14, // espaço na parte de baixo
+  },
+
+  lista: {
+    marginStart: 14, // margem no começo
+    marginEnd: 14, // margem no final
+  },
+});
